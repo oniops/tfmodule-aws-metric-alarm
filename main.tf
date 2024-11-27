@@ -12,8 +12,9 @@ resource "aws_cloudwatch_metric_alarm" "this" {
   actions_enabled                       = var.actions_enabled
   alarm_actions                         = var.alarm_actions
   ok_actions                            = var.ok_actions
-  #
   insufficient_data_actions             = var.insufficient_data_actions
+
+  # alarm
   comparison_operator                   = var.comparison_operator
   evaluation_periods                    = var.evaluation_periods
   threshold                             = var.threshold

@@ -42,7 +42,11 @@ variable "threshold_metric_id" {
 }
 
 variable "unit" {
-  description = "The unit for the alarm's associated metric. Support value is Count."
+  description = <<EOF
+The unit for the alarm's associated metric. Support value is Count.
+  see - https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#Unit
+  Valid values: Bytes, Seconds, Count, Percent
+EOF
   type        = string
   default     = null
 }
@@ -84,27 +88,89 @@ variable "datapoints_to_alarm" {
 }
 
 variable "dimensions" {
-  description = "The dimensions for the alarm's associated metric."
   type        = any
   default     = null
+  description = <<EOF
+The dimensions for the alarm's associated metric.
+
+  # for identifying resource
+  dimensions = {
+    InstanceId            = aws_instance.myEc2App.id
+    Environment           = "Production"
+    DBInstanceIdentifier  = "my-rds-instance"
+    LoadBalancerName      = "my-elb-load-balancer-name"
+    BucketName            = "my-bucket"
+    ClusterName           = "my-cluster"
+    ServiceName           = "my-service"
+    TopicName             = "my-sns-topic"
+  }
+
+EOF
 }
 
 variable "alarm_actions" {
-  description = "The list of actions to execute when this alarm transitions into an ALARM state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
   type        = list(string)
   default     = null
+  description = <<EOF
+The list of actions to execute when this alarm transitions into an ALARM state from any other state. Each action is specified as an Amazon Resource Name (ARN).
+
+  insufficient_data_actions = [
+    aws_sns_topic.mySnsTopic.arn,          # in case of SNS Notification
+    aws_autoscaling_policy.myappScale.arn, # in case of Auto Scaling action
+    aws_ssm_document.mySsmRunCommand.arn,  # in case of Systems Manager action
+    aws_lambda_function.myLambda.arn,      # in case of Lambda action
+    arn:aws:automate:us-east-1:ec2:stop,   # in case of EC2 action, should define dimensions with InstanceId attribute
+  ]
+
+  # EC2 Action to stop the instance
+  dimensions = {
+    InstanceId = aws_instance.myEc2App.id
+  }
+
+EOF
 }
 
 variable "insufficient_data_actions" {
-  description = "The list of actions to execute when this alarm transitions into an INSUFFICIENT_DATA state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
   type        = list(string)
   default     = []
+  description = <<EOF
+The list of actions to execute when this alarm transitions into an INSUFFICIENT_DATA state from any other state. Each action is specified as an Amazon Resource Name (ARN).
+
+  insufficient_data_actions = [
+    aws_sns_topic.mySnsTopic.arn,          # in case of SNS Notification
+    aws_autoscaling_policy.myappScale.arn, # in case of Auto Scaling action
+    aws_ssm_document.mySsmRunCommand.arn,  # in case of Systems Manager action
+    aws_lambda_function.myLambda.arn,      # in case of Lambda action
+    arn:aws:automate:us-east-1:ec2:stop,   # in case of EC2 action, should define dimensions with InstanceId attribute
+  ]
+
+  # EC2 Action to stop the instance
+  dimensions = {
+    InstanceId = aws_instance.myEc2App.id
+  }
+EOF
 }
 
 variable "ok_actions" {
-  description = "The list of actions to execute when this alarm transitions into an OK state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
   type        = list(string)
   default     = null
+  description = <<EOF
+The list of actions to execute when this alarm transitions into an OK state from any other state. Each action is specified as an Amazon Resource Name (ARN).
+
+  ok_actions = [
+    aws_sns_topic.mySnsTopic.arn,          # in case of SNS Notification
+    aws_autoscaling_policy.myappScale.arn, # in case of Auto Scaling action
+    aws_ssm_document.mySsmRunCommand.arn,  # in case of Systems Manager action
+    aws_lambda_function.myLambda.arn,      # in case of Lambda action
+    arn:aws:automate:us-east-1:ec2:stop,   # in case of EC2 action, should define dimensions with InstanceId attribute
+  ]
+
+  # EC2 Action to stop the instance
+  dimensions = {
+    InstanceId = aws_instance.myEc2App.id
+  }
+
+EOF
 }
 
 variable "extended_statistic" {
