@@ -14,6 +14,12 @@ variable "alarm_description" {
   default     = null
 }
 
+variable "alarm_fullname" {
+  description = "Fullname of alarm."
+  type        = string
+  default     = null
+}
+
 variable "comparison_operator" {
   description = <<EOF
 The arithmetic operation to use when comparing the specified Statistic and Threshold. The specified Statistic value is used as the first operand.

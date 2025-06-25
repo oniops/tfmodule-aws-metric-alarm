@@ -6,9 +6,3 @@ variable "context" {
     tags = map(string)
   })
 }
-
-variable "fullname" {
-  description = "Fullname of alarm."
-  type        = string
-  default     = null
-}
