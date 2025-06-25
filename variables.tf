@@ -4,18 +4,19 @@ variable "create" {
 }
 
 variable "alarm_name" {
-  description = "The descriptive name for the alarm. This name must be unique within the user's AWS account."
+  description = "The name of the alarm. This name must be unique within the user's AWS account."
   type        = string
+  default     = null
 }
 
 variable "alarm_description" {
-  description = "The description for the alarm."
+  description = "The description for the alarm. This name must be unique within the user's AWS account."
   type        = string
   default     = null
 }
 
 variable "alarm_fullname" {
-  description = "Fullname of alarm."
+  description = "The name of the alarm fullname. Alarm name should be set by alarm_name or alarm_fullname"
   type        = string
   default     = null
 }

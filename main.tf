@@ -1,6 +1,6 @@
 locals {
   name_prefix        = var.context.name_prefix
-  alarm_name         = var.alarm_description != null ? var.alarm_description : "${local.name_prefix}-${var.alarm_name}"
+  alarm_name         = var.alarm_fullname != null ? var.alarm_fullname : "${local.name_prefix}-${var.alarm_name}"
   added_metric_query = length(var.metric_query) > 0 ? true : false
 }
 
