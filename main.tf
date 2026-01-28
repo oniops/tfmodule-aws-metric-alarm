@@ -58,12 +58,7 @@ resource "aws_cloudwatch_metric_alarm" "this" {
   }
   threshold_metric_id = var.threshold_metric_id
 
-  tags_all = merge(var.context.tags, {
-    AlarmName = local.alarm_name
+  tags_all = merge(var.tags, {
+    Name = local.alarm_name
   })
-
-  lifecycle {
-    ignore_changes = [tags]
-  }
-
 }
